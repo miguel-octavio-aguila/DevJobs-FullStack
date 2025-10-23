@@ -1,3 +1,5 @@
 import './include/apply-button.js'
 import './include/config.js'
 import './include/filters.js'
+import './include/fetch-data.js'
+import './include/devjobs-avatar-element.js'
