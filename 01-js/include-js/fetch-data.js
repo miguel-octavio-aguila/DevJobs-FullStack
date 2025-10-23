@@ -2,7 +2,7 @@ const container = document.querySelector('.jobs-listings')
 
 const RESULTS_PER_PAGE = 3
 
-fetch("../../01-js/data/data.json") /* fetch es asíncrono */
+fetch("../data/data.json") /* fetch es asíncrono */
     .then((response) => {
         return response.json();
     })
