@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevJobs - Jobs</title>
+    <meta name="description" content="Jobs list for your next job in the tech industry.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../main.js" type="module"></script>
+</head>
+<body>
+    <header>
+        <h1>
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Devjobs
+        </h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="jobs.html">Jobs</a>
+        </nav>
+
+        <div>
+            <a href="">Post a job</a>
+            <a href="">Login</a>
+            <devjobs-avatar></devjobs-avatar>
+        </div>
+    </header>
+
+    <main>
+        <section class="jobs-search">
+            <h1>Find your next job</h1>
+            <p>Explore thousands of job opportunities in the tech industry.</p>
+
+            <form id="jobs-search-form" role="search">
+                <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                    <path d="M21 21l-6 -6" />
+                </svg>
+
+                <input name="search" id="jobs-search-input" required type="text"
+                    placeholder="Search for jobs, companies or skills">
+                </div>
+
+                <div class="search-filters">
+                    <select name="technology" id="filter-technology">
+                        <option value="">Technology</option>
+                        <optgroup label="Popular Technologies">
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="react">React</option>
+                            <option value="nodejs">Node.js</option>
+                        </optgroup>
+                        <option value="java">Java</option>
+                        <hr />
+                        <option value="csharp">C#</option>
+                        <option value="c">C</option>
+                        <option value="c++">C++</option>
+                        <hr />
+                        <option value="ruby">Ruby</option>
+                        <option value="php">PHP</option>
+                    </select>
+
+                    <select name="location" id="filter-location">
+                        <option value="">Location</option>
+                        <option value="remoto">Remote</option>
+                        <option value="cdmx">Mexico City</option>
+                        <option value="guadalajara">Guadalajara</option>
+                        <option value="monterrey">Monterrey</option>
+                        <option value="barcelona">Barcelona</option>
+                    </select>
+
+                    <select name="experience-level" id="filter-experience-level">
+                        <option value="">Experience Level</option>
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid-level</option>
+                        <option value="senior">Senior</option>
+                        <option value="lead">Lead</option>
+                    </select>
+                </div>
+            </form>
+
+            <span id="filter-selected-value"></span>
+        </section>
+
+        <section>
+            <h2>Jobs Listings</h2>
+
+            <div class="jobs-listings">
+                <!-- Here we will insert the job listings dynamically -->
+            </div>
+
+            <nav class="pagination">
+                <a href="#">
+                    <!-- chevron -->
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M15 6l-6 6l6 6" />
+                    </svg>
+                </a>
+                <a class="is-active" href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M9 6l6 6l-6 6" />
+                    </svg>
+                </a>
+            </nav>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; 2025 DevJobs. All rights reserved.</small>
+    </footer>
+</body>
+</html>
