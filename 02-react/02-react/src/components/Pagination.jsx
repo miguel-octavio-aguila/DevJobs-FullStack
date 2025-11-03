@@ -1,16 +1,37 @@
-function Pagination({ currentPage = 1, totalPages = 10 }) {
+function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
     // generar un array de paginas para mostrar
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
     const isFirstPage = currentPage === 1
     const isLastPage = currentPage === totalPages
 
+    const handlePrevClick = (event) => {
+        event.preventDefault()
+        if (!isFirstPage) { 
+            onPageChange(currentPage - 1)
+        }
+    }
+
+    const handleNextClick = (event) => {
+        event.preventDefault()
+        if (!isLastPage) { 
+            onPageChange(currentPage + 1)
+        }
+    }
+
+    const handleChangePage = (event, page) => {
+        event.preventDefault()
+        if (page !== currentPage) {
+            onPageChange(page)
+        }
+    }
+
     return (
         <nav className="pagination">
             {/* <!-- First page link / conditional rendering --> */}
             {
                 !isFirstPage && (
-                    <a href="#">
+                    <a href="#" onClick={handlePrevClick}>
                         {/* <!-- chevron --> */}
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokelinewidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -25,6 +46,7 @@ function Pagination({ currentPage = 1, totalPages = 10 }) {
                 <a
                     href="#"
                     className={currentPage === page ? 'is-active' : ''}
+                    onClick={(event) => handleChangePage(event, page)}
                 >
                     {page}
                 </a>
@@ -33,7 +55,7 @@ function Pagination({ currentPage = 1, totalPages = 10 }) {
             {/* <!-- Last page link --> */}
             {
                 !isLastPage && (
-                    <a href="#">
+                    <a href="#" onClick={handleNextClick}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokelinewidth="1.5" strokeLinecap="round" strokeLinejoin="round"
                         className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
