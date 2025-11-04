@@ -78,7 +78,7 @@
         "location": "Remoto",
         "description": "Buscamos un especialista en ciberseguridad con conocimientos en protección de infraestructuras, análisis de vulnerabilidades y respuesta ante incidentes. Se valorará experiencia con SIEM y certificaciones de seguridad.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "remoto",
         "level": "mid-level"
         }
@@ -90,7 +90,7 @@
         "location": "Madrid",
         "description": "Estamos buscando un Product Manager con experiencia en la definición y lanzamiento de productos digitales. Se requiere capacidad analítica, liderazgo y conocimiento en metodologías ágiles.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "madrid",
         "level": "senior"
         }
@@ -102,7 +102,7 @@
         "location": "Valencia",
         "description": "Buscamos un desarrollador frontend con experiencia en React, TypeScript y Tailwind CSS. Se valorará conocimiento en optimización de rendimiento y accesibilidad web.",
         "data": {
-        "technology": "react",
+        "tech": "react",
         "mod": "valencia",
         "level": "mid-level"
         }
@@ -114,7 +114,7 @@
         "location": "Bogotá",
         "description": "Estamos buscando un desarrollador backend con experiencia en Node.js, Express y bases de datos NoSQL. Se requiere conocimiento en arquitectura de microservicios.",
         "data": {
-        "technology": "node",
+        "tech": "node",
         "mod": "bogota",
         "level": "mid"
         }
@@ -126,7 +126,7 @@
         "location": "Remoto",
         "description": "Buscamos un ingeniero de machine learning con experiencia en modelos de predicción y procesamiento de datos. Se valorará conocimiento en TensorFlow, PyTorch y MLOps.",
         "data": {
-        "technology": "python",
+        "tech": "python",
         "mod": "remoto",
         "level": "senior"
         }
@@ -138,7 +138,7 @@
         "location": "Lima",
         "description": "Se busca ingeniero de QA con experiencia en automatización de pruebas utilizando herramientas como Selenium, Cypress o Playwright. Conocimiento deseado en CI/CD.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "lima",
         "level": "mid-level"
         }
@@ -150,7 +150,7 @@
         "location": "Santiago de Chile",
         "description": "Buscamos un administrador de sistemas con experiencia en Linux, Docker y monitoreo de servidores. Conocimiento en scripting Bash o Python será un plus.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "santiago",
         "level": "mid-level"
         }
@@ -162,7 +162,7 @@
         "location": "Madrid",
         "description": "Estamos buscando un Scrum Master con experiencia en metodologías ágiles y gestión de equipos multidisciplinarios. Certificación Scrum Master deseable.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "madrid",
         "level": "mid-level"
         }
@@ -174,7 +174,7 @@
         "location": "Monterrey",
         "description": "Buscamos un técnico de soporte con habilidades en resolución de incidencias, redes y sistemas operativos. Se requiere atención al detalle y excelente trato con el usuario.",
         "data": {
-        "technology": "mobile",
+        "tech": "mobile",
         "mod": "monterrey",
         "level": "junior"
         }
