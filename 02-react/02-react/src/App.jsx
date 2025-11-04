@@ -22,14 +22,14 @@ function App() {
     const jobsFilteredByFilters = jobsData.filter(job => {
         return (
             (filters.technology === '' || job.data.tech.toLowerCase() === filters.technology.toLowerCase()) &&
-            (filters.location === '' || job.data.location.toLowerCase() === filters.location.toLowerCase()) &&
+            (filters.location === '' || job.location.toLowerCase() === filters.location.toLowerCase()) &&
             (filters.experienceLevel === '' || job.data.level.toLowerCase() === filters.experienceLevel.toLowerCase())
         )
     })
 
     const jobsWithTextFilter = textFilter === ''
-        ? jobsData
-        : jobsData.filter(job => {
+        ? jobsFilteredByFilters
+        : jobsFilteredByFilters.filter(job => {
             return job.title.toLowerCase().includes(textFilter.toLowerCase())
         })
 
