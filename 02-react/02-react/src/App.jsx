@@ -1,72 +1,50 @@
 import './App.css'
-import { useState } from 'react'
+
+import { useState, useEffect } from 'react'
+
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
-import Pagination from './components/Pagination.jsx'
-import SearchFormSection from './components/SearchFormSection.jsx'
-import JobListings from './components/JobListings.jsx'
 
-import jobsData from './data/data.json'
-
-const RESULTS_PER_PAGE = 5
+import { HomePage } from './pages/Home.jsx'
+import { SearchPage } from './pages/Search.jsx'
+import { NotFoundPage } from './pages/404.jsx'
 
 function App() {
-    const [filters, setFilters] = useState({
-        technology: '',
-        location: '',
-        experienceLevel: ''
-    })
-    const [textFilter, setTextFilter] = useState('')
-    const [currentPage, setCurrentPage] = useState(1)
+    // State para almacenar la ruta actual
+    const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
-    const jobsFilteredByFilters = jobsData.filter(job => {
-        return (
-            (filters.technology === '' || job.data.tech.toLowerCase() === filters.technology.toLowerCase()) &&
-            (filters.location === '' || job.location.toLowerCase() === filters.location.toLowerCase()) &&
-            (filters.experienceLevel === '' || job.data.level.toLowerCase() === filters.experienceLevel.toLowerCase())
-        )
-    })
-
-    const jobsWithTextFilter = textFilter === ''
-        ? jobsFilteredByFilters
-        : jobsFilteredByFilters.filter(job => {
-            return job.title.toLowerCase().includes(textFilter.toLowerCase())
-        })
-
-    const totalPages = Math.ceil(jobsWithTextFilter.length / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
-
-    const pagedResults = jobsWithTextFilter.slice(
-        (currentPage - 1) * RESULTS_PER_PAGE, // page 1 -> 0, page 2 -> 5, page 3 -> 10, etc.
-        currentPage * RESULTS_PER_PAGE // page 1 -> 5, page 2 -> 10, page 3 -> 15, etc.
-    )
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page)
+    let page = <NotFoundPage />
+    if (currentPath === '/') {
+        page = <HomePage />
+    } else if (currentPath === '/search') {
+        page = <SearchPage />
     }
 
-    const handleSearch = (filters) => {
-        setFilters(filters)
-        setCurrentPage(1)
-    }
+    // Aplicacion de Single Page Application (SPA)
+    // Effect para manejar el evento popstate
+    // popstate es disparado cuando el usuario navega usando el botón de 
+    // retroceso o avance del navegador
+    useEffect(() => {
+        // Función para manejar el evento popstate
+        const handlePopState = () => {
+            // Actualizar la ruta actual
+            setCurrentPath(window.location.pathname)
+        }
 
-    const handleTextFilter = (text) => {
-        setTextFilter(text)
-        setCurrentPage(1)
-    }
+        // Agregar el evento popstate al objeto window
+        window.addEventListener('popstate', handlePopState)
 
+        return () => {
+            // Eliminar el evento popstate al desmontar el componente
+            window.removeEventListener('popstate', handlePopState)
+        }
+    }, [])
 
     return (
         <>
             <Header />
 
-            <main>
-                <SearchFormSection onSearch={handleSearch} onTextChange={handleTextFilter}/>
-
-                <section>
-                    <JobListings jobs={pagedResults} />
-                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>
-                </section>
-            </main>
+            {page}
 
             <Footer />
         </>

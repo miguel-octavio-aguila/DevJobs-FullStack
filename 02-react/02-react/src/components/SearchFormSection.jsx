@@ -9,8 +9,10 @@ function SearchFormSection({ onSearch, onTextChange }) {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        const formData = new FormData(event.target)
-
+        // event.target is for onSubmit
+        // event.currentTarget is for the onChange
+        const formData = new FormData(event.currentTarget)
+        
         const filters = {
             text: formData.get(idText),
             technology: formData.get(idTechnology),
@@ -32,7 +34,8 @@ function SearchFormSection({ onSearch, onTextChange }) {
             <h1>Find your next job</h1>
             <p>Explore thousands of job opportunities in the tech industry.</p>
 
-            <form onSubmit={handleSubmit} id="jobs-search-form" role="search">
+            {/* Instead of using onSubtmit in the form, we are going to use onChange to view the jobs when the filters change like the search bar */}
+            <form onChange={handleSubmit} id="jobs-search-form" role="search">
                 <div className="search-bar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokelinewidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -50,7 +53,7 @@ function SearchFormSection({ onSearch, onTextChange }) {
                         onChange={handleTextChange} 
                     />
 
-                    <button type="submit" style={{position: 'absolute', right: '4px' }}>Search</button>
+                    {/* <button type="submit" style={{position: 'absolute', right: '4px' }}>Search</button> */}
                 </div>
 
                 <div className="search-filters">
