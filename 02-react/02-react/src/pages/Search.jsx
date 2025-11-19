@@ -17,7 +17,7 @@ export function SearchPage() {
     // - handlePageChange: función para cambiar de página
     // - handleSearch: función para aplicar filtros de búsqueda
     // - handleTextFilter: función para filtrar por texto
-    const { currentPage, jobsWithTextFilter, totalPages, pagedResults, handlePageChange, handleSearch, handleTextFilter } = useFilters()
+    const { currentPage, jobs, total, totalPages, loading, handlePageChange, handleSearch, handleTextFilter } = useFilters()
 
     // useEffect es un hook que nos permite ejecutar código cuando algo cambia.
     // En este caso, queremos actualizar el título de la pestaña del navegador.
@@ -28,7 +28,7 @@ export function SearchPage() {
         
         // 2. Cambiamos el título del documento (la pestaña del navegador).
         // Mostramos cuántos resultados hay y en qué página estamos.
-        document.title = `Results: ${jobsWithTextFilter.length}, Page: ${currentPage} - DevJobs`
+        document.title = `Results: ${total}, Page: ${currentPage} - DevJobs`
 
         // 3. Retornamos una "función de limpieza" (cleanup function).
         // React ejecutará esta función automáticamente cuando:
@@ -38,7 +38,7 @@ export function SearchPage() {
             // Restauramos el título original que guardamos al principio.
             document.title = previousTitle
         }
-    }, [currentPage, jobsWithTextFilter]) // El array de dependencias: el efecto se ejecutará cada vez que cambie 'currentPage' o 'jobsWithTextFilter'.
+    }, [currentPage, total]) // El array de dependencias: el efecto se ejecutará cada vez que cambie 'currentPage' o 'jobs'.
 
     return (
         <main>
@@ -48,7 +48,7 @@ export function SearchPage() {
 
             <section>
                 {/* Renderizamos la lista de trabajos, pasándole solo los resultados de la página actual. */}
-                <JobListings jobs={pagedResults} />
+                <JobListings jobs={jobs} />
                 
                 {/* Renderizamos la paginación, pasándole la página actual, el total y la función para cambiar. */}
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>

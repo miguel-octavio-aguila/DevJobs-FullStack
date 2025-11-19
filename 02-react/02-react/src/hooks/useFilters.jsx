@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-import jobsData from '../data/data.json'
+import { useEffect, useState } from "react";
 
 const RESULTS_PER_PAGE = 5
 
@@ -10,29 +8,33 @@ export function useFilters() {
         location: '',
         experienceLevel: ''
     })
+
     const [textFilter, setTextFilter] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
+
+    const [loading, setLoading] = useState(true)
+    const [jobs, setJobs] = useState([])
+    const [total, setTotal] = useState(0)
+
+    // fetching of data
+    useEffect(() => {
+        const fetchJobs = async () => {
+            try {
+                setLoading(true)
+                const response = await fetch('https://jscamp-api.vercel.app/api/jobs')
+                const json = await response.json()
+                setJobs(json.data)
+                setTotal(json.total)
+            } catch (error) {
+                console.error('Error fetching jobs:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchJobs()
+    }, [])
     
-    const jobsFilteredByFilters = jobsData.filter(job => {
-        return (
-            (filters.technology === '' || job.data.tech.toLowerCase() === filters.technology.toLowerCase()) &&
-            (filters.location === '' || job.data.mod.toLowerCase() === filters.location.toLowerCase()) &&
-            (filters.experienceLevel === '' || job.data.level.toLowerCase() === filters.experienceLevel.toLowerCase())
-        )
-    })
-    
-    const jobsWithTextFilter = textFilter === ''
-        ? jobsFilteredByFilters
-        : jobsFilteredByFilters.filter(job => {
-            return job.title.toLowerCase().includes(textFilter.toLowerCase())
-        })
-    
-    const totalPages = Math.ceil(jobsWithTextFilter.length / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
-    
-    const pagedResults = jobsWithTextFilter.slice(
-        (currentPage - 1) * RESULTS_PER_PAGE, // page 1 -> 0, page 2 -> 5, page 3 -> 10, etc.
-        currentPage * RESULTS_PER_PAGE // page 1 -> 5, page 2 -> 10, page 3 -> 15, etc.
-    )
+    const totalPages = Math.ceil(jobs.length / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
     
     const handlePageChange = (page) => {
         setCurrentPage(page)
@@ -49,10 +51,11 @@ export function useFilters() {
     }
 
     return {
+        loading,
         currentPage,
-        jobsWithTextFilter,
+        jobs,
+        total,
         totalPages,
-        pagedResults,
         handlePageChange,
         handleSearch,
         handleTextFilter
