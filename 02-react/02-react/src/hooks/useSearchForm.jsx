@@ -1,6 +1,8 @@
 import { useState } from "react"
 
-export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, onSearch, onTextChange }) {
+let timeoutId = null
+
+export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextChange }) {
     const [searchText, setSearchText] = useState('')
 
     const handleSubmit = (event) => {
@@ -9,6 +11,10 @@ export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, onS
         // event.target is for onSubmit
         // event.currentTarget is for the onChange
         const formData = new FormData(event.currentTarget)
+
+        if(event.target.name === idText) {
+            return
+        }
         
         const filters = {
             technology: formData.get(idTechnology),
@@ -21,8 +27,16 @@ export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, onS
 
     const handleTextChange = (event) => {
         const inputValue = event.target.value
-        setSearchText(inputValue)
-        onTextChange(inputValue)
+        setSearchText(inputValue) // we update the input immediately
+        
+        // Debounce: cancel the previous timeout and set a new one 
+        if (timeoutId) {
+            clearTimeout(timeoutId)
+        }
+
+        timeoutId = setTimeout(() => {
+            onTextChange(inputValue)
+        }, 500)
     }
 
     return {

@@ -13,6 +13,7 @@ function SearchFormSection({ onSearch, onTextChange }) {
         idTechnology,
         idLocation,
         idExperienceLevel,
+        idText,
         onSearch,
         onTextChange
     })

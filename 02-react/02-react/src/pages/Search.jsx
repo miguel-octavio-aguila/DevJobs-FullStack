@@ -57,6 +57,8 @@ export function SearchPage() {
             <SearchFormSection onSearch={handleSearch} onTextChange={handleTextFilter}/>
 
             <section>
+                <h2 style={{ textAlign: 'center' }}>Jobs Listings</h2>
+                
                 {
                     loading ? (
                         <p style={{ textAlign: 'center', padding: '1rem' }}>Loading...</p>

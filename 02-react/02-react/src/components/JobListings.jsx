@@ -3,8 +3,6 @@ import JobCard from './JobCard'
 function JobListings({ jobs }) {
     return (
         <>
-            <h2 style={{ textAlign: 'center' }}>Jobs Listings</h2>
-
             <div className="jobs-listings">
                 {
                     jobs.length === 0 ? (
