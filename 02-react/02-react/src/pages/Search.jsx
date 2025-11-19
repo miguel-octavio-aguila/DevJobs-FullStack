@@ -1,65 +1,56 @@
-import '../App.css'
-import { useState } from 'react'
+import '../App.css' // Importamos los estilos globales de la aplicación
+import { useEffect } from 'react' // Importamos el hook useEffect de React para manejar efectos secundarios
 
-import Pagination from '../components/Pagination.jsx'
-import SearchFormSection from '../components/SearchFormSection.jsx'
-import JobListings from '../components/JobListings.jsx'
+import Pagination from '../components/Pagination.jsx' // Importamos el componente de paginación
+import SearchFormSection from '../components/SearchFormSection.jsx' // Importamos el componente del formulario de búsqueda
+import JobListings from '../components/JobListings.jsx' // Importamos el componente que lista los trabajos
 
-import jobsData from '../data/data.json'
-
-const RESULTS_PER_PAGE = 5
+import { useFilters } from '../hooks/useFilters.jsx' // Importamos nuestro hook personalizado para manejar la lógica de filtrado
 
 export function SearchPage() {
-    const [filters, setFilters] = useState({
-        technology: '',
-        location: '',
-        experienceLevel: ''
-    })
-    const [textFilter, setTextFilter] = useState('')
-    const [currentPage, setCurrentPage] = useState(1)
+    // Usamos nuestro hook personalizado useFilters.
+    // Este hook nos devuelve todo lo necesario para la página:
+    // - currentPage: página actual
+    // - jobsWithTextFilter: lista de trabajos ya filtrados
+    // - totalPages: número total de páginas
+    // - pagedResults: los trabajos que se deben mostrar en la página actual
+    // - handlePageChange: función para cambiar de página
+    // - handleSearch: función para aplicar filtros de búsqueda
+    // - handleTextFilter: función para filtrar por texto
+    const { currentPage, jobsWithTextFilter, totalPages, pagedResults, handlePageChange, handleSearch, handleTextFilter } = useFilters()
 
-    const jobsFilteredByFilters = jobsData.filter(job => {
-        return (
-            (filters.technology === '' || job.data.tech.toLowerCase() === filters.technology.toLowerCase()) &&
-            (filters.location === '' || job.data.mod.toLowerCase() === filters.location.toLowerCase()) &&
-            (filters.experienceLevel === '' || job.data.level.toLowerCase() === filters.experienceLevel.toLowerCase())
-        )
-    })
+    // useEffect es un hook que nos permite ejecutar código cuando algo cambia.
+    // En este caso, queremos actualizar el título de la pestaña del navegador.
+    useEffect(() => {
+        // 1. Guardamos el título que tenía la página antes de entrar aquí (por ejemplo "DevJobs").
+        // Esto es importante para poder restaurarlo cuando salgamos de esta página.
+        const previousTitle = document.title
+        
+        // 2. Cambiamos el título del documento (la pestaña del navegador).
+        // Mostramos cuántos resultados hay y en qué página estamos.
+        document.title = `Results: ${jobsWithTextFilter.length}, Page: ${currentPage} - DevJobs`
 
-    const jobsWithTextFilter = textFilter === ''
-        ? jobsFilteredByFilters
-        : jobsFilteredByFilters.filter(job => {
-            return job.title.toLowerCase().includes(textFilter.toLowerCase())
-        })
-
-    const totalPages = Math.ceil(jobsWithTextFilter.length / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
-
-    const pagedResults = jobsWithTextFilter.slice(
-        (currentPage - 1) * RESULTS_PER_PAGE, // page 1 -> 0, page 2 -> 5, page 3 -> 10, etc.
-        currentPage * RESULTS_PER_PAGE // page 1 -> 5, page 2 -> 10, page 3 -> 15, etc.
-    )
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page)
-    }
-
-    const handleSearch = (filters) => {
-        setFilters(filters)
-        setCurrentPage(1)
-    }
-
-    const handleTextFilter = (text) => {
-        setTextFilter(text)
-        setCurrentPage(1)
-    }
-
+        // 3. Retornamos una "función de limpieza" (cleanup function).
+        // React ejecutará esta función automáticamente cuando:
+        // - El componente se desmonte (el usuario se vaya a otra página).
+        // - O antes de volver a ejecutar el efecto (si cambian las dependencias).
+        return () => {
+            // Restauramos el título original que guardamos al principio.
+            document.title = previousTitle
+        }
+    }, [currentPage, jobsWithTextFilter]) // El array de dependencias: el efecto se ejecutará cada vez que cambie 'currentPage' o 'jobsWithTextFilter'.
 
     return (
         <main>
+            {/* Renderizamos la sección del formulario de búsqueda.
+                Le pasamos las funciones para manejar la búsqueda y el cambio de texto. */}
             <SearchFormSection onSearch={handleSearch} onTextChange={handleTextFilter}/>
 
             <section>
+                {/* Renderizamos la lista de trabajos, pasándole solo los resultados de la página actual. */}
                 <JobListings jobs={pagedResults} />
+                
+                {/* Renderizamos la paginación, pasándole la página actual, el total y la función para cambiar. */}
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>
             </section>
         </main>
