@@ -13,14 +13,14 @@ function JobCard ( { job } ) {
     return (
         <article
             className="job-listing-card"
-            data-mod = { job.data.mod }
-            data-level = { job.data.level }
-            data-tech = { job.data.tech }
+            data-modalidad = { job.data.modalidad }
+            data-nivel = { job.data.nivel }
+            data-tecnologia = { job.data.tecnologia }
         >
             <div>
-                <h3>{ job.title }</h3>
-                <small>{ job.company } | { job.location }</small>
-                <p>{ job.description }</p>
+                <h3>{ job.titulo }</h3>
+                <small>{ job.empresa } | { job.ubicacion }</small>
+                <p>{ job.descripcion }</p>
             </div>
 
             <button className={buttonClass} onClick={handleApplyClick}>{buttonText}</button>

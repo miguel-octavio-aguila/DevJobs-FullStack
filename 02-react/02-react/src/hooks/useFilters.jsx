@@ -21,7 +21,31 @@ export function useFilters() {
         const fetchJobs = async () => {
             try {
                 setLoading(true)
-                const response = await fetch('https://jscamp-api.vercel.app/api/jobs')
+
+                // we use URLSearchParams to create a query string from the filters
+                const params = new URLSearchParams()
+                // we add the filters to the query string
+                if (textFilter) params.append('text', textFilter)
+                // we add the technology filter to the query string
+                if (filters.technology) params.append('technology', filters.technology)
+                // we add the location filter to the query string
+                if (filters.location) params.append('type', filters.location)
+                // we add the experience level filter to the query string
+                if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+
+                // we calculate the offset for the pagination
+                // offset is the number of items to skip
+                const offset = (currentPage - 1) * RESULTS_PER_PAGE
+                
+                params.append('offset', offset)
+                // limit is the number of items to return
+                params.append('limit', RESULTS_PER_PAGE)
+
+                // we convert the query string to a string
+                const queryParams = params.toString()
+
+                // we fetch the jobs
+                const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
                 const json = await response.json()
                 setJobs(json.data)
                 setTotal(json.total)
@@ -32,9 +56,10 @@ export function useFilters() {
             }
         }
         fetchJobs()
-    }, [])
+    }, [textFilter, filters, currentPage])
     
-    const totalPages = Math.ceil(jobs.length / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
+    // we calculate the total number of pages
+    const totalPages = Math.ceil(total / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
     
     const handlePageChange = (page) => {
         setCurrentPage(page)

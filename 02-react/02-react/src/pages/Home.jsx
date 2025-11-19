@@ -12,10 +12,12 @@ export function HomePage() {
         const url = searchTerm ? `/search?text=${encodeURIComponent(searchTerm)}` : '/search'
         navigateTo(url)
     }
+    const title = 'DevJobs'
 
     return (
         <>
             <main>
+                <title>{title}</title>
                 <section>
                     <img src="../../public/background.webp" alt="" />
 
