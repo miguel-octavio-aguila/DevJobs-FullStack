@@ -1,13 +1,12 @@
+import { useRouter } from "../hooks/useRouter.jsx"
+
 export function Link({ href, children, ...restOfProps }) {
+    const { navigateTo } = useRouter()
     // this is a client side link, we don't want to reload the page
     const handleClick = (event) => {
         // prevent the default behavior of the link
         event.preventDefault()
-
-        // navigate to the new url
-        window.history.pushState({}, '', href)
-        // trigger the popstate event to update the url in the browser
-        window.dispatchEvent(new PopStateEvent('popstate'))
+        navigateTo(href)
     }
 
     return (
