@@ -1,33 +1,21 @@
 import { useId } from "react"
 
+import { useSearchForm } from "../hooks/useSearchForm"
+
 function SearchFormSection({ onSearch, onTextChange }) {
     const idText = useId()
     const idTechnology = useId()
     const idLocation = useId()
     const idExperienceLevel = useId()
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-
-        // event.target is for onSubmit
-        // event.currentTarget is for the onChange
-        const formData = new FormData(event.currentTarget)
-        
-        const filters = {
-            text: formData.get(idText),
-            technology: formData.get(idTechnology),
-            location: formData.get(idLocation),
-            experienceLevel: formData.get(idExperienceLevel),
-        }
-
-        onSearch(filters)
-    }
-
-    const handleTextChange = (event) => {
-        const inputValue = event.target.value
-        onTextChange(inputValue)
-    }
-
+    // custom hook
+    const { handleSubmit, handleTextChange } = useSearchForm({
+        idTechnology,
+        idLocation,
+        idExperienceLevel,
+        onSearch,
+        onTextChange
+    })
 
     return (
         <section className="jobs-search">
