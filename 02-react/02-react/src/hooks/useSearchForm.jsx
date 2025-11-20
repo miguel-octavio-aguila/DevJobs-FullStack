@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 
-let timeoutId = null
+//let timeoutId = null // something temporal. This is a bad practice because if we use this component more times, it will share the same timeoutId in all of them
 
 export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, idText, onSearch, onTextChange }) {
     const [searchText, setSearchText] = useState('')
+
+    const timeoutId = useRef(null)
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -30,11 +32,12 @@ export function useSearchForm({ idTechnology, idLocation, idExperienceLevel, idT
         setSearchText(inputValue) // we update the input immediately
         
         // Debounce: cancel the previous timeout and set a new one 
-        if (timeoutId) {
-            clearTimeout(timeoutId)
+        // timeoutId.current is the value of the timeoutId
+        if (timeoutId.current) {
+            clearTimeout(timeoutId.current)
         }
 
-        timeoutId = setTimeout(() => {
+        timeoutId.current = setTimeout(() => {
             onTextChange(inputValue)
         }, 500)
     }
