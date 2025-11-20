@@ -20,7 +20,7 @@ export function SearchPage() {
     // - handlePageChange: función para cambiar de página
     // - handleSearch: función para aplicar filtros de búsqueda
     // - handleTextFilter: función para filtrar por texto
-    const { currentPage, jobs, total, totalPages, loading, handlePageChange, handleSearch, handleTextFilter } = useFilters()
+    const { currentPage, jobs, total, totalPages, loading, filters, textFilter, handlePageChange, handleSearch, handleTextFilter } = useFilters()
 
     /*
     // useEffect es un hook que nos permite ejecutar código cuando algo cambia.
@@ -54,7 +54,7 @@ export function SearchPage() {
             <title>{title}</title>
             {/* Renderizamos la sección del formulario de búsqueda.
                 Le pasamos las funciones para manejar la búsqueda y el cambio de texto. */}
-            <SearchFormSection onSearch={handleSearch} onTextChange={handleTextFilter}/>
+            <SearchFormSection initialText={textFilter} initialFilters={filters} onSearch={handleSearch} onTextChange={handleTextFilter}/>
 
             <section>
                 <h2 style={{ textAlign: 'center' }}>Jobs Listings</h2>

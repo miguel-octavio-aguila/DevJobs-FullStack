@@ -28,12 +28,18 @@ function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
         }
     }
 
+    const buildPageUrl = (page) => {
+        const url = new URL(window.location)
+        url.searchParams.set('page',page)
+        return `${url.pathname}?${url.searchParams.toString()}`
+    }
+
     return (
         <nav className={styles.pagination}>
             {/* <!-- First page link / conditional rendering --> */}
             {
                 !isFirstPage && (
-                    <a href="#" onClick={handlePrevClick}>
+                    <a href={buildPageUrl(currentPage - 1)} onClick={handlePrevClick}>
                         {/* <!-- chevron --> */}
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokelinewidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -46,7 +52,7 @@ function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
             {/* <!-- Here we will insert the pagination links dynamically --> */}
             {pages.map(page => (
                 <a
-                    href="#"
+                    href={buildPageUrl(page)}
                     key={page}
                     data-page = {page}
                     className={currentPage === page ? styles.isActive : ''}
@@ -59,7 +65,7 @@ function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
             {/* <!-- Last page link --> */}
             {
                 !isLastPage && (
-                    <a href="#" onClick={handleNextClick}>
+                    <a href={buildPageUrl(currentPage + 1)} onClick={handleNextClick}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokelinewidth="1.5" strokeLinecap="round" strokeLinejoin="round"
                         className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />

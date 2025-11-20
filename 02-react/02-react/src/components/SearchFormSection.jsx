@@ -2,7 +2,7 @@ import { useId } from "react"
 
 import { useSearchForm } from "../hooks/useSearchForm"
 
-function SearchFormSection({ onSearch, onTextChange }) {
+function SearchFormSection({ onSearch, onTextChange, initialText, initialFilters }) {
     const idText = useId()
     const idTechnology = useId()
     const idLocation = useId()
@@ -39,14 +39,15 @@ function SearchFormSection({ onSearch, onTextChange }) {
                         id="jobs-search-input" 
                         type="text" 
                         placeholder="Search for jobs, companies or skills" 
-                        onChange={handleTextChange} 
+                        onChange={handleTextChange}
+                        defaultValue={initialText}
                     />
 
                     {/* <button type="submit" style={{position: 'absolute', right: '4px' }}>Search</button> */}
                 </div>
 
                 <div className="search-filters">
-                    <select name={idTechnology} id="filter-technology">
+                    <select name={idTechnology} id="filter-technology" defaultValue={initialFilters.technology}>
                         <option value="">Technology</option>
                         <optgroup label="Popular Technologies">
                             <option value="javascript">JavaScript</option>
@@ -64,7 +65,7 @@ function SearchFormSection({ onSearch, onTextChange }) {
                         <option value="php">PHP</option>
                     </select>
 
-                    <select name={idLocation} id="filter-location">
+                    <select name={idLocation} id="filter-location" defaultValue={initialFilters.location}>
                         <option value="">Location</option>
                         <option value="remoto">Remote</option>
                         <option value="cdmx">Mexico City</option>
@@ -73,7 +74,7 @@ function SearchFormSection({ onSearch, onTextChange }) {
                         <option value="barcelona">Barcelona</option>
                     </select>
 
-                    <select name={idExperienceLevel} id="filter-experience-level">
+                    <select name={idExperienceLevel} id="filter-experience-level" defaultValue={initialFilters.experienceLevel}>
                         <option value="">Experience Level</option>
                         <option value="junior">Junior</option>
                         <option value="mid">Mid-level</option>

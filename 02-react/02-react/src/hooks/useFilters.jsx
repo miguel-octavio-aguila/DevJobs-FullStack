@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "./useRouter.jsx"
 
 const RESULTS_PER_PAGE = 5
 
 export function useFilters() {
-    const [filters, setFilters] = useState({
-        technology: '',
-        location: '',
-        experienceLevel: ''
+    const [filters, setFilters] = useState(() => {
+        const params = new URLSearchParams(window.location.search)
+        return {
+            technology: params.get('technology') || '',
+            location: params.get('type') || '',
+            experienceLevel: params.get('level') || ''
+        }
     })
 
-    const [textFilter, setTextFilter] = useState('')
-    const [currentPage, setCurrentPage] = useState(1)
+    const [textFilter, setTextFilter] = useState(() => {
+        const params = new URLSearchParams(window.location.search)
+        return params.get('text') || ''
+    })
+    const [currentPage, setCurrentPage] = useState(() => {
+        const params = new URLSearchParams(window.location.search)
+        const page = Number(params.get('page'))
+        return !page || page < 1 ? 1 : page
+    })
 
     const [loading, setLoading] = useState(true)
     const [jobs, setJobs] = useState([])
     const [total, setTotal] = useState(0)
+
+    const { navigateTo } = useRouter()
 
     // fetching of data
     useEffect(() => {
@@ -57,6 +70,23 @@ export function useFilters() {
         }
         fetchJobs()
     }, [textFilter, filters, currentPage])
+
+    useEffect(() => {
+        const params = new URLSearchParams()
+
+        if(filters.technology) params.append('technology', filters.technology)
+        if(filters.location) params.append('type', filters.location)
+        if(filters.experienceLevel) params.append('level', filters.experienceLevel)
+        if(textFilter) params.append('text', textFilter)
+
+        if(currentPage > 1) params.append('page', currentPage)
+
+        const newUrl = params.toString()
+            ? `${window.location.pathname}?${params.toString()}`
+            : window.location.pathname
+
+        navigateTo(newUrl)
+    }, [currentPage, filters, textFilter, navigateTo])
     
     // we calculate the total number of pages
     const totalPages = Math.ceil(total / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
@@ -81,6 +111,8 @@ export function useFilters() {
         jobs,
         total,
         totalPages,
+        filters,
+        textFilter,
         handlePageChange,
         handleSearch,
         handleTextFilter
