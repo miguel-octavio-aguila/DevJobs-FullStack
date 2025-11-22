@@ -480,6 +480,7 @@ footer {
 }
 
 .nav-link-active {
-    color: yellow;
+    color: transparent;
     pointer-events: none;
+    user-select: none;
 }

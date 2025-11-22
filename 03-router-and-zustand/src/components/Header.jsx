@@ -1,9 +1,9 @@
-import { Link } from "./Link"
+import { NavLink } from "react-router"
 
 function Header() {
     return (
         <header>
-            <Link href="/" style={{ textDecoration: 'none' }}>
+            <NavLink to="/" style={{ textDecoration: 'none' }}>
                 <h1 style={{ color: 'white' }}>
                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -12,16 +12,16 @@ function Header() {
                     </svg>
                     Devjobs
                 </h1>
-            </Link>
+            </NavLink>
 
             <nav>
-                <Link href="/" style={{ textDecoration: 'none' }}>Home</Link>
-                <Link href="/search" style={{ textDecoration: 'none' }}>Jobs</Link>
+                <NavLink to="/" style={{ textDecoration: 'none' }}>Home</NavLink>
+                <NavLink to="/search" style={{ textDecoration: 'none' }} className={({ isActive }) => isActive ? 'nav-link-active' : ''}>Jobs</NavLink>
             </nav>
 
             <div>
-                <Link href="/post-job" style={{ textDecoration: 'none' }}>Post a job</Link>
-                <Link href="/login" style={{ textDecoration: 'none' }}>Login</Link>
+                <NavLink to="/post-job" style={{ textDecoration: 'none' }}>Post a job</NavLink>
+                <NavLink to="/login" style={{ textDecoration: 'none' }}>Login</NavLink>
                 <devjobs-avatar></devjobs-avatar>
             </div>
         </header>

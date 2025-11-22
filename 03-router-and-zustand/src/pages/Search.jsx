@@ -10,7 +10,7 @@ import JobListings from '../components/JobListings.jsx' // Importamos el compone
 
 import { useFilters } from '../hooks/useFilters.jsx' // Importamos nuestro hook personalizado para manejar la lógica de filtrado
 
-export function SearchPage() {
+export default function SearchPage() {
     // Usamos nuestro hook personalizado useFilters.
     // Este hook nos devuelve todo lo necesario para la página:
     // - currentPage: página actual

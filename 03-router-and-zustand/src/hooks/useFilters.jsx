@@ -7,27 +7,26 @@ const RESULTS_PER_PAGE = 5
 
 export function useFilters() {
     const [searchParams, setSearchParams] = useSearchParams()
-    let params = searchParams
 
     const [filters, setFilters] = useState(() => {
         // we get the filters from the search params so we don't need to use the window.location.search
         // const params = new URLSearchParams(window.location.search)
         return {
-            technology: params.get('technology') || '',
-            location: params.get('type') || '',
-            experienceLevel: params.get('level') || ''
+            technology: searchParams.get('technology') || '',
+            location: searchParams.get('type') || '',
+            experienceLevel: searchParams.get('level') || ''
         }
     })
 
     const [textFilter, setTextFilter] = useState(() => {
         // we get the text filter from the search params so we don't need to use the window.location.search
         // const params = new URLSearchParams(window.location.search)
-        params.get('text') || ''
+        return searchParams.get('text') || ''
     })
     const [currentPage, setCurrentPage] = useState(() => {
         // we get the current page from the search params so we don't need to use the window.location.search
         // const params = new URLSearchParams(window.location.search)
-        const page = Number(params.get('page'))
+        const page = Number(searchParams.get('page'))
         return !page || page < 1 ? 1 : page
     })
 
@@ -85,12 +84,35 @@ export function useFilters() {
         setSearchParams((params) => {
             // we don't use .append anymore because we are using the router
             // we use .set because we want to replace the existing params
-            if(filters.technology) params.set('technology', filters.technology)
-            if(filters.location) params.set('type', filters.location)
-            if(filters.experienceLevel) params.set('level', filters.experienceLevel)
-            if(textFilter) params.set('text', textFilter)
+            if(filters.technology) {
+                params.set('technology', filters.technology)
+            } else {
+                params.delete('technology')
+            }
+
+            if(filters.location) {
+                params.set('type', filters.location)
+            } else {
+                params.delete('type')
+            }
+
+            if(filters.experienceLevel) {
+                params.set('level', filters.experienceLevel)
+            } else {
+                params.delete('level')
+            }
+
+            if(textFilter) {
+                params.set('text', textFilter)
+            } else {
+                params.delete('text')
+            }
     
-            if(currentPage > 1) params.set('page', currentPage)
+            if(currentPage > 1) {
+                params.set('page', currentPage)
+            } else {
+                params.delete('page')
+            }
     
             return params
             // we don't need to navigate to the new url because we are using the router

@@ -23,7 +23,7 @@ function JobSection ({ title, content }) {
     )
 }
 
-export function JobDetail() {
+export default function JobDetail() {
     // id is the name of the param <Route path="/jobs/:id" element={<JobDetail />} />
     const { id } = useParams()
     const navigate = useNavigate()
