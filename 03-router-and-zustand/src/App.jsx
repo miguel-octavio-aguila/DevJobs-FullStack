@@ -8,6 +8,7 @@ import Footer from './components/Footer.jsx'
 
 import { HomePage } from './pages/Home.jsx'
 import { SearchPage } from './pages/Search.jsx'
+import { JobDetail } from './pages/Detail.jsx'
 import { NotFoundPage } from './pages/404.jsx'
 
 // we won't use this route components anymore
@@ -22,6 +23,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/jobs/:id" element={<JobDetail />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
 

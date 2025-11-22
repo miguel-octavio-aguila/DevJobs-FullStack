@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { Link } from "./Link"
+
+import styles from './css_modules/JobCard.module.css'
 
 function JobCard ( { job } ) {
     const [isApplied, setIsApplied] = useState(false)
@@ -18,12 +21,21 @@ function JobCard ( { job } ) {
             data-tecnologia = { job.data.tecnologia }
         >
             <div>
-                <h3>{ job.titulo }</h3>
+                <h3>
+                    <Link href={`/jobs/${job.id}`} className={styles.title}>
+                        {job.titulo}
+                    </Link>
+                </h3>
                 <small>{ job.empresa } | { job.ubicacion }</small>
                 <p>{ job.descripcion }</p>
             </div>
 
-            <button className={buttonClass} onClick={handleApplyClick}>{buttonText}</button>
+            <div className={styles.actions}>
+                <Link href={`/jobs/${job.id}`} className={styles.details}>
+                    View job
+                </Link>
+                <button className={buttonClass} onClick={handleApplyClick}>{buttonText}</button>
+            </div>
         </article>
     )
 }

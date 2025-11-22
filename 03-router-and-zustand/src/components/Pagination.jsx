@@ -1,4 +1,4 @@
-import styles from './css_mudules/Pagination.module.css'
+import styles from './css_modules/Pagination.module.css'
 
 function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
     // generar un array de paginas para mostrar
