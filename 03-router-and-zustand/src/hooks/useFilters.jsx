@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "./useRouter.jsx"
+
+// The useRouter import was removed since navigateTo is not necessary
+// if we only handle useSearchParams.
+// import { useRouter } from "./useRouter.jsx"
 
 import { useSearchParams } from "react-router";
 
@@ -8,33 +11,51 @@ const RESULTS_PER_PAGE = 5
 export function useFilters() {
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [filters, setFilters] = useState(() => {
-        // we get the filters from the search params so we don't need to use the window.location.search
-        // const params = new URLSearchParams(window.location.search)
-        return {
-            technology: searchParams.get('technology') || '',
-            location: searchParams.get('type') || '',
-            experienceLevel: searchParams.get('level') || ''
-        }
-    })
+    // const [filters, setFilters] = useState(() => {
+    //     // we get the filters from the search params so we don't need to use the window.location.search
+    //     // const params = new URLSearchParams(window.location.search)
+    //     return {
+    //         technology: searchParams.get('technology') || '',
+    //         location: searchParams.get('type') || '',
+    //         experienceLevel: searchParams.get('level') || ''
+    //     }
+    // })
 
-    const [textFilter, setTextFilter] = useState(() => {
-        // we get the text filter from the search params so we don't need to use the window.location.search
-        // const params = new URLSearchParams(window.location.search)
-        return searchParams.get('text') || ''
-    })
-    const [currentPage, setCurrentPage] = useState(() => {
-        // we get the current page from the search params so we don't need to use the window.location.search
-        // const params = new URLSearchParams(window.location.search)
+    // Function to get filters directly from the URL
+    const filters = {
+        technology: searchParams.get('technology') || '',
+        location: searchParams.get('type') || '',
+        experienceLevel: searchParams.get('level') || ''
+    }
+
+    // const [textFilter, setTextFilter] = useState(() => {
+    //     // we get the text filter from the search params so we don't need to use the window.location.search
+    //     // const params = new URLSearchParams(window.location.search)
+    //     return searchParams.get('text') || ''
+    // })
+
+    // Function to get search text directly from the URL
+    const textFilter = searchParams.get('text') || ''
+
+    // const [currentPage, setCurrentPage] = useState(() => {
+    //     // we get the current page from the search params so we don't need to use the window.location.search
+    //     // const params = new URLSearchParams(window.location.search)
+    //     const page = Number(searchParams.get('page'))
+    //     return !page || page < 1 ? 1 : page
+    // })
+
+    // Function to get current page directly from the URL
+    const currentPage = (() => {
         const page = Number(searchParams.get('page'))
         return !page || page < 1 ? 1 : page
-    })
+    })()
 
     const [loading, setLoading] = useState(true)
     const [jobs, setJobs] = useState([])
     const [total, setTotal] = useState(0)
 
-    const { navigateTo } = useRouter()
+    // navigateTo is no longer needed because we are using the router
+    // const { navigateTo } = useRouter()
 
     // fetching of data
     useEffect(() => {
@@ -44,6 +65,7 @@ export function useFilters() {
 
                 // we use URLSearchParams to create a query string from the filters
                 const params = new URLSearchParams()
+
                 // we add the filters to the query string
                 if (textFilter) params.append('text', textFilter)
                 // we add the technology filter to the query string
@@ -63,12 +85,12 @@ export function useFilters() {
 
                 // we convert the query string to a string
                 const queryParams = params.toString()
-
                 // we fetch the jobs
                 const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
                 const json = await response.json()
-                setJobs(json.data)
-                setTotal(json.total)
+
+                setJobs(json.data || [])
+                setTotal(json.total || 0)
             } catch (error) {
                 console.error('Error fetching jobs:', error)
             } finally {
@@ -76,70 +98,120 @@ export function useFilters() {
             }
         }
         fetchJobs()
-    }, [textFilter, filters, currentPage])
+    }, [textFilter, filters.technology, filters.location, filters.experienceLevel, currentPage])
 
-    useEffect(() => {
-        // we get the params from the search params so we don't need to use the window.location.search
-        //const params = new URLSearchParams()
-        setSearchParams((params) => {
-            // we don't use .append anymore because we are using the router
-            // we use .set because we want to replace the existing params
-            if(filters.technology) {
-                params.set('technology', filters.technology)
-            } else {
-                params.delete('technology')
-            }
+    // REMOVED THE SYNCHRONIZATION useEffect
 
-            if(filters.location) {
-                params.set('type', filters.location)
-            } else {
-                params.delete('type')
-            }
+    // The original code had a second useEffect here that is no longer necessary
+    // because the handler functions will update the URL directly.
 
-            if(filters.experienceLevel) {
-                params.set('level', filters.experienceLevel)
-            } else {
-                params.delete('level')
-            }
+    // useEffect(() => {
+    //     // we get the params from the search params so we don't need to use the window.location.search
+    //     //const params = new URLSearchParams()
+    //     setSearchParams((params) => {
+    //         // we don't use .append anymore because we are using the router
+    //         // we use .set because we want to replace the existing params
+    //         if(filters.technology) {
+    //             params.set('technology', filters.technology)
+    //         } else {
+    //             params.delete('technology')
+    //         }
 
-            if(textFilter) {
-                params.set('text', textFilter)
-            } else {
-                params.delete('text')
-            }
+    //         if(filters.location) {
+    //             params.set('type', filters.location)
+    //         } else {
+    //             params.delete('type')
+    //         }
+
+    //         if(filters.experienceLevel) {
+    //             params.set('level', filters.experienceLevel)
+    //         } else {
+    //             params.delete('level')
+    //         }
+
+    //         if(textFilter) {
+    //             params.set('text', textFilter)
+    //         } else {
+    //             params.delete('text')
+    //         }
     
-            if(currentPage > 1) {
-                params.set('page', currentPage)
-            } else {
-                params.delete('page')
-            }
+    //         if(currentPage > 1) {
+    //             params.set('page', currentPage)
+    //         } else {
+    //             params.delete('page')
+    //         }
     
-            return params
-            // we don't need to navigate to the new url because we are using the router
-            // const newUrl = params.toString()
-            //     ? `${window.location.pathname}?${params.toString()}`
-            //     : window.location.pathname
+    //         return params
+    //         // we don't need to navigate to the new url because we are using the router
+    //         // const newUrl = params.toString()
+    //         //     ? `${window.location.pathname}?${params.toString()}`
+    //         //     : window.location.pathname
     
-            // navigateTo(newUrl)
-        })
+    //         // navigateTo(newUrl)
+    //     })
 
-    }, [currentPage, filters, textFilter, navigateTo, setSearchParams])
+    // }, [currentPage, filters, textFilter, navigateTo, setSearchParams])
     
     // we calculate the total number of pages
     const totalPages = Math.ceil(total / RESULTS_PER_PAGE) // 10 / 5 = 2.2 = 3 pages
     
+    // const handlePageChange = (page) => {
+    //     setCurrentPage(page)
+    // }
+    
+    // const handleSearch = (filters) => {
+    //     setFilters(filters)
+    //     setCurrentPage(1)
+    // }
+    
+    // const handleTextFilter = (text) => {
+    //     setTextFilter(text)
+    //     setCurrentPage(1)
+    // }
+
+    // MODIFIED HANDLER FUNCTIONS TO USE setPageParams DIRECTLY
+    
     const handlePageChange = (page) => {
-        setCurrentPage(page)
+        setSearchParams(prev => {
+            const newParams = new URLSearchParams(prev)
+            if (page > 1) {
+                newParams.set('page', page)
+            } else {
+                // This helps to "clean" the URL when returning to page 1
+                newParams.delete('page')
+            }
+            return newParams
+        }, { replace: true }) // { replace: true } avoids filling the browser history
     }
     
-    const handleSearch = (filters) => {
-        setFilters(filters)
-        setCurrentPage(1)
+    const handleSearch = (newFilters) => {
+        setSearchParams(prev => {
+            const newParams = new URLSearchParams(prev)
+            
+            // Set filters, removing if empty
+            newFilters.technology ? newParams.set('technology', newFilters.technology) : newParams.delete('technology')
+            newFilters.location ? newParams.set('type', newFilters.location) : newParams.delete('type')
+            newFilters.experienceLevel ? newParams.set('level', newFilters.experienceLevel) : newParams.delete('level')
+            
+            // Reset page to 1 (removing 'page' parameter)
+            newParams.delete('page')
+            
+            return newParams
+        }, { replace: true })
     }
     
     const handleTextFilter = (text) => {
-        setTextFilter(text)
-        setCurrentPage(1)
+        setSearchParams(prev => {
+            const newParams = new URLSearchParams(prev)
+            
+            // Set text filter, removing if empty
+            text ? newParams.set('text', text) : newParams.delete('text')
+            
+            // Reset page to 1
+            newParams.delete('page')
+
+            return newParams
+        }, { replace: true })
     }
 
     return {
