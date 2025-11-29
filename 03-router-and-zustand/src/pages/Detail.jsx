@@ -2,28 +2,13 @@
 import { useParams, useNavigate } from "react-router"
 import { useState, useEffect } from "react"
 
-import { Link } from "../components/Link"
+import JobSection from "../components/JobSection.jsx"
+import DetailPageBreadCrumb from "../components/DetailPageBreadCrumb.jsx"
+import DetailPageHeader from "../components/DetailPageHeader.jsx"
 
-import snarkdown from 'snarkdown'
 import styles from './css_modules/Detail.module.css'
 
-function JobSection ({ title, content }) {
-    // convert in html the content of the API with snarkdown library
-    const html = snarkdown(content)
-
-    return (
-        <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-                {title}
-            </h2>
-
-            <div className={`${styles.sectionContent} prose`} dangerouslySetInnerHTML={{__html: html}} />
-
-        </section>
-    )
-}
-
-export default function JobDetail() {
+export default function JobDetail( { isLoggedIn } ) {
     // id is the name of the param <Route path="/jobs/:id" element={<JobDetail />} />
     const { id } = useParams()
     const navigate = useNavigate()
@@ -76,31 +61,9 @@ export default function JobDetail() {
     
     return (
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-            <div className={styles.container}>
-                <nav className={styles.breadcrumb}>
-                <Link 
-                    href="/search"
-                    className={styles.breadcrumbButton}
-                >
-                    Jobs
-                </Link>
-                <span className={styles.breadcrumbSeparator}>/</span>
-                <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
-                </nav>
-            </div>
+            <DetailPageBreadCrumb job={job} />
 
-            <header className={styles.header}>
-                <h1 className={styles.title}>
-                {job.titulo}
-                </h1>
-                <p className={styles.meta}>
-                {job.empresa} · {job.ubicacion}
-                </p>
-            </header>
-
-            <button className={styles.applyButton}>
-                Apply now
-            </button>
+            <DetailPageHeader job={job} isLoggedIn={isLoggedIn} />
 
             <JobSection title="Description" content={job.content.description} />
             <JobSection title="Responsibilities" content={job.content.responsibilities} />

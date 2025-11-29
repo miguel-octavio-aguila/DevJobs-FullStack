@@ -1,6 +1,6 @@
 import { NavLink } from "react-router"
 
-function Header() {
+function Header( { isLoggedIn, onLogin, onLogout } ) {
     return (
         <header>
             <NavLink to="/" style={{ textDecoration: 'none' }}>
@@ -20,8 +20,11 @@ function Header() {
             </nav>
 
             <div>
-                <NavLink to="/post-job" style={{ textDecoration: 'none' }}>Post a job</NavLink>
-                <NavLink to="/login" style={{ textDecoration: 'none' }}>Login</NavLink>
+                {
+                    isLoggedIn
+                        ? <button onClick={onLogout}>Logout</button>
+                        : <button onClick={onLogin}>Login</button>
+                }
                 <devjobs-avatar></devjobs-avatar>
             </div>
         </header>
