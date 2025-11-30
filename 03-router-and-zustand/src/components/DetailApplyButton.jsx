@@ -1,10 +1,11 @@
-import { AuthContext } from "../context/AuthContext"
-import { useContext, useState } from "react"
+import { useState } from "react"
+
+import { useAuth } from "../context/AuthContext"
 
 import styles from "./css_modules/DetailApplyButton.module.css"
 
 export default function DetailApplyButton() {
-    const { isLoggedIn } = useContext(AuthContext)
+    const { isLoggedIn } = useAuth()
     const [isApplied, setIsApplied] = useState(false)
     
     const handleApplyClick = () => {
