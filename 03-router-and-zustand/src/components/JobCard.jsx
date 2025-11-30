@@ -1,18 +1,10 @@
-import { useState } from "react"
 import { Link } from "./Link"
+
+import DetailApplyButton from "./DetailApplyButton"
 
 import styles from './css_modules/JobCard.module.css'
 
 function JobCard ( { job } ) {
-    const [isApplied, setIsApplied] = useState(false)
-
-    const handleApplyClick = () => {
-        setIsApplied(true)
-    }
-
-    const buttonText = isApplied ? 'Applied' : 'Apply Now'
-    const buttonClass = isApplied ? 'button-apply-job is-applied' : 'button-apply-job'
-
     return (
         <article
             className="job-listing-card"
@@ -34,7 +26,7 @@ function JobCard ( { job } ) {
                 <Link href={`/jobs/${job.id}`} className={styles.details}>
                     View job
                 </Link>
-                <button className={buttonClass} onClick={handleApplyClick}>{buttonText}</button>
+                <DetailApplyButton />
             </div>
         </article>
     )

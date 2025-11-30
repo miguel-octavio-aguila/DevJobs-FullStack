@@ -1,6 +1,7 @@
 import styles from "./css_modules/DetailPageHeader.module.css"
+import DetailApplyButton from "./DetailApplyButton"
 
-export default function DetailPageHeader({ job, isLoggedIn }) {
+export default function DetailPageHeader({ job }) {
     return (
         <>
             <header className={styles.header}>
@@ -12,9 +13,9 @@ export default function DetailPageHeader({ job, isLoggedIn }) {
                     </p>
             </header>
 
-            <button disabled={!isLoggedIn} className={styles.applyButton}>
-                {isLoggedIn ? 'Apply now' : 'Login to apply'}
-            </button>
+            <div className={styles.applyButtonContainer}>
+                <DetailApplyButton />
+            </div>
         </>
     )
 }

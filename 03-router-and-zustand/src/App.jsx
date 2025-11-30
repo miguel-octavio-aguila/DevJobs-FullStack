@@ -1,7 +1,5 @@
 import './App.css'
 
-import { useState } from 'react'
-
 // lazy loading
 // we use lazy loading to load the components on demand
 // we use Suspense to show a fallback while the component is loading
@@ -29,25 +27,15 @@ const JobDetail = lazy(() => import('./pages/Detail.jsx'))
 const NotFoundPage = lazy(() => import('./pages/404.jsx'))
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-    const handleLogin = () => {
-        setIsLoggedIn(true)
-    }
-
-    const handleLogout = () => {
-        setIsLoggedIn(false)
-    }
-
     return (
         <>
-            <Header isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
+            <Header />
 
             <Suspense fallback={<div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', padding: '1rem' }}>Loading...</div>}>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/search" element={<SearchPage />} />
-                    <Route path="/jobs/:id" element={<JobDetail isLoggedIn={isLoggedIn} />} />
+                    <Route path="/jobs/:id" element={<JobDetail />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Suspense>

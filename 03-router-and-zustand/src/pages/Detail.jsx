@@ -8,7 +8,7 @@ import DetailPageHeader from "../components/DetailPageHeader.jsx"
 
 import styles from './css_modules/Detail.module.css'
 
-export default function JobDetail( { isLoggedIn } ) {
+export default function JobDetail() {
     // id is the name of the param <Route path="/jobs/:id" element={<JobDetail />} />
     const { id } = useParams()
     const navigate = useNavigate()
@@ -63,7 +63,7 @@ export default function JobDetail( { isLoggedIn } ) {
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
             <DetailPageBreadCrumb job={job} />
 
-            <DetailPageHeader job={job} isLoggedIn={isLoggedIn} />
+            <DetailPageHeader job={job} />
 
             <JobSection title="Description" content={job.content.description} />
             <JobSection title="Responsibilities" content={job.content.responsibilities} />

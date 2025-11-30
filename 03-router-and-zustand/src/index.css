@@ -427,15 +427,6 @@ footer {
     }
 }
 
-.button-apply-job {
-    background: #09f;
-
-    &.is-applied {
-        background: #4caf50;
-        pointer-events: none;
-    }
-}
-
 .prose {
     line-height: 1.75;
 }
