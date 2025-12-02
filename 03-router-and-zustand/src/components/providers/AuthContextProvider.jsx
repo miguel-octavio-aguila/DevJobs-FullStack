@@ -19,6 +19,7 @@ export function AuthContextProvider({ children }) {
     }
 
     return (
+        // AuthContext instead of AuthContext.Provider because it is a new feature of React
         <AuthContext value={value}>
             {children}
         </AuthContext>
