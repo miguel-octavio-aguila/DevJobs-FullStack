@@ -1,5 +1,6 @@
 import styles from "./css_modules/DetailPageHeader.module.css"
 import DetailApplyButton from "./DetailApplyButton"
+import FavoriteButton from "./FavoriteButton"
 
 export default function DetailPageHeader({ job }) {
     return (
@@ -15,6 +16,7 @@ export default function DetailPageHeader({ job }) {
 
             <div className={styles.applyButtonContainer}>
                 <DetailApplyButton />
+                <FavoriteButton job={job} />
             </div>
         </>
     )

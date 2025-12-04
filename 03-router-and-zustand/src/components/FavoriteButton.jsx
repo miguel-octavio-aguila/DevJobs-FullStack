@@ -5,7 +5,12 @@ import styles from './css_modules/FavoriteButton.module.css'
 
 export default function FavoriteButton({ job }) {
     const { isLoggedIn } = useAuth()
+    // with this we subscribre to all the store
     const { toggleFavorite, isFavorite } = useFavoritesStore()
+
+    // now we subscribe only to the store we need
+    // const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite)
+    // const isFavorite = useFavoritesStore((state) => state.isFavorite)
     
     return (
         isLoggedIn && (
