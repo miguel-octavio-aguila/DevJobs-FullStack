@@ -16,7 +16,7 @@ export default function DetailPageHeader({ job }) {
 
             <div className={styles.applyButtonContainer}>
                 <DetailApplyButton />
-                <FavoriteButton job={job} />
+                <FavoriteButton jobId={job.id} />
             </div>
         </>
     )

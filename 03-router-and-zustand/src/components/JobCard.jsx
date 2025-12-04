@@ -27,7 +27,7 @@ function JobCard ( { job } ) {
                     View job
                 </Link>
                 <DetailApplyButton />
-                <FavoriteButton job={job} />
+                <FavoriteButton jobId={job.id} />
             </div>
         </article>
     )
