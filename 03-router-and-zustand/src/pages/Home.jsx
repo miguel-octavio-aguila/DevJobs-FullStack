@@ -33,7 +33,7 @@ export default function HomePage() {
                                 <path d="M21 21l-6 -6" />
                             </svg>
                             <input name="search" type="text" placeholder="Search for a job" />
-                            <button type="submit">Search</button>
+                            <button type="submit" className="button-search">Search</button>
                         </div>
                     </form>
                 </section>

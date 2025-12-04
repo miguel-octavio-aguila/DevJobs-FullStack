@@ -9,9 +9,7 @@ createRoot(document.getElementById('root')).render(
   // react router
   <BrowserRouter>
     <AuthContextProvider>
-      <FavoritesProvider>
-        <App />
-      </FavoritesProvider>
+      <App />
     </AuthContextProvider>
   </BrowserRouter>
 )
