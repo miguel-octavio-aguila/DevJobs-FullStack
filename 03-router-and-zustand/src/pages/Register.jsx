@@ -28,52 +28,54 @@ export default function Register() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.card}>
+            <div className={styles.headerContent}>
                 <h1 className={styles.title}>Register</h1>
                 <p className={styles.subtitle}>
                     Register to apply for jobs
                 </p>
+            </div>
 
+            <div className={styles.card}>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="name" className={styles.label}>
-                            Name
-                        </label>
-                        <input
-                        id={nameId}
-                        name={nameId}
-                        type="text"
-                        className={styles.input}
-                        placeholder="Juan Pérez"
-                        required
-                        />
+                        <div className={styles.inputWrapper}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.inputIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input
+                            id={nameId}
+                            name={nameId}
+                            type="text"
+                            className={styles.input}
+                            placeholder="Name"
+                            required
+                            />
+                        </div>
                     </div>  
                     <div className={styles.formGroup}>
-                        <label htmlFor={emailId} className={styles.label}>
-                        Email
-                        </label>
-                        <input
-                        id={emailId}
-                        name={emailId}
-                        type="email"
-                        className={styles.input}
-                        placeholder="tu@email.com"
-                        required
-                        />
+                        <div className={styles.inputWrapper}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.inputIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            <input
+                            id={emailId}
+                            name={emailId}
+                            type="email"
+                            className={styles.input}
+                            placeholder="Email"
+                            required
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="password" className={styles.label}>
-                            Password
-                        </label>
-                        <input
-                        id={passwordId}
-                        name={passwordId}
-                        type="password"
-                        className={styles.input}
-                        placeholder="••••••••"
-                        required
-                        />
+                        <div className={styles.inputWrapper}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.inputIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input
+                            id={passwordId}
+                            name={passwordId}
+                            type="password"
+                            className={styles.input}
+                            placeholder="Password"
+                            required
+                            />
+                        </div>
                     </div>
 
                     <button type="submit" className={styles.submitButton}>
@@ -81,12 +83,20 @@ export default function Register() {
                     </button>
                 </form>
 
-                <p className={styles.footer}>
-                    Already have an account?{' '}
-                    <a href="/login" className={styles.link}>
+                <div className={styles.divider}>
+                    <span>Already have an account?</span>
+                </div>
+
+                <div className={styles.socialButtons}>
+                    <button 
+                        type="button" 
+                        className={styles.outlineButton} 
+                        style={{gridColumn: '1 / -1', textAlign: 'center'}}
+                        onClick={() => navigate('/login')}
+                    >
                         Login here
-                    </a>
-                </p>
+                    </button>
+                </div>
             </div>
         </div>
     )
